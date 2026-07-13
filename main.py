@@ -4,7 +4,6 @@ import mediapipe as mp
 import os , time 
 from Hand_Tracking_Model.utils import handDetector
 from utils import get_fps , draw_fps_capsule
-import math
 
 
 ##################
@@ -15,17 +14,6 @@ Wcam, Hcam = 1280 , 720
 cap = cv2.VideoCapture(0)
 cap.set(3,Wcam)
 cap.set(4,Hcam)
-
-img_path = os.listdir("images") ; img_path.sort()
-overlayList = []
-
-for path in img_path:
-    image = cv2.resize( cv2.imread(f'images/{path}'),
-                        (200,300),
-                        interpolation=cv2.INTER_AREA
-    )
-
-    overlayList.append(image)
 
 
 detector = handDetector(model_path = "Hand_Tracking_Model/hand_landmarker.task",
@@ -54,8 +42,15 @@ while True:
     # flipping the image Y-AXIS : 
     img = cv2.flip(img,1)
 
-    # image display
-    img[0:300,1080:1280] = overlayList[0]
+    # Display controls
+
+    controls = cv2.resize(cv2.imread("controls.png"),
+                        (Wcam//4,Hcam),
+                        interpolation=cv2.INTER_AREA
+                        )
+    h , w , c = controls.shape
+
+    img[0:h,0:w] = controls
 
     # preprocessing
     img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
@@ -68,11 +63,11 @@ while True:
     if len(lmList)!=0:
         lmList = lmList[0]
         
-        
+
 
 
     else :
-        cv2.putText(img,Alert, (40,120), cv2.FONT_HERSHEY_COMPLEX,
+        cv2.putText(img,Alert, (620,100), cv2.FONT_HERSHEY_COMPLEX,
                     1, (183,81,93) , 1
                     )
         print(Alert)
