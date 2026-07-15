@@ -59,8 +59,6 @@ while True:
                         )
     h , w , c = controls.shape
 
-    img[0:h,0:w] = controls
-
     # preprocessing
     img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
     mp_img = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
@@ -68,6 +66,8 @@ while True:
     res = detector.landmarker.detect_for_video(mp_img,timestamp_ms) 
 
     lmList = detector.findHands(img,res, draw =True )
+
+    img[0:h,0:w] = controls
 
     if canvas is None:
             canvas = np.zeros_like(img)
