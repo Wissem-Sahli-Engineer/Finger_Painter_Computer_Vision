@@ -48,16 +48,16 @@ def handle_control_panel(cx, cy, color, brush_thickness, canvas, img):
     # --------------------------------------------
     if 180 < cy < 250:
         if 15 < cx < 65:
-            color = (0, 0, 255)      # BGR Red
+            color = (255, 0, 0)      # RGB Red
             print("Selected: RED")
         elif 95 < cx < 145:
-            color = (0, 255, 0)      # BGR Green
+            color = (0, 255, 0)      # RGB Green
             print("Selected: GREEN")
         elif 175 < cx < 225:
-            color = (255, 0, 0)      # BGR Blue
+            color = (0, 0, 255)      # RGB Blue
             print("Selected: BLUE")
         elif 255 < cx < 305:
-            color = (0, 255, 255)    # BGR Yellow
+            color = (255, 255, 0)    # RGB Yellow
             print("Selected: YELLOW")
 
     # --------------------------------------------
@@ -65,16 +65,16 @@ def handle_control_panel(cx, cy, color, brush_thickness, canvas, img):
     # --------------------------------------------
     elif 300 < cy < 370:
         if 15 < cx < 65:
-            color = (255, 0, 255)    # BGR Purple
+            color = (255, 0, 255)    # RGB Purple
             print("Selected: PURPLE")
         elif 95 < cx < 145:
-            color = (0, 165, 255)    # BGR Orange
+            color = (255, 165, 0)    # RGB Orange
             print("Selected: ORANGE")
         elif 175 < cx < 225:
-            color = (255, 255, 255)  # BGR White
+            color = (255, 255, 255)  # RGB White
             print("Selected: WHITE")
         elif 255 < cx < 305:
-            color = (0, 0, 0)        # BGR Black (Draws black onto canvas)
+            color = (1, 1, 1)        # RGB Near-Black (so it draws black instead of being transparent)
             print("Selected: BLACK")
 
     # --------------------------------------------

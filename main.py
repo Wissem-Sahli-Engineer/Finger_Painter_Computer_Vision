@@ -57,6 +57,7 @@ while True:
                         (Wcam//4,Hcam),
                         interpolation=cv2.INTER_AREA
                         )
+    controls = cv2.cvtColor(controls, cv2.COLOR_BGR2RGB)
     h , w , c = controls.shape
 
     # preprocessing
@@ -108,7 +109,14 @@ while True:
                     )
         print(Alert)
 
-    img = cv2.add(img, canvas)
+    # Merge canvas and camera feed using masking so black paint & transparent regions work correctly
+    canvas_gray = cv2.cvtColor(canvas, cv2.COLOR_RGB2GRAY)
+    _, mask = cv2.threshold(canvas_gray, 0, 255, cv2.THRESH_BINARY)
+    mask_inv = cv2.bitwise_not(mask)
+    
+    img_bg = cv2.bitwise_and(img, img, mask=mask_inv)
+    img_fg = cv2.bitwise_and(canvas, canvas, mask=mask)
+    img = cv2.add(img_bg, img_fg)
 
     # display 
     draw_fps_capsule(img, fps)
